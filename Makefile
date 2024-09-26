@@ -75,6 +75,7 @@ gz:
 MERGE += Makefile README.md apt.txt LICENSE
 MERGE += .clang-format .doxygen .gitignore
 MERGE += .vscode bin doc lib inc src tmp ref
+MERGE += hw cpu arch
 
 .PHONY: dev
 dev:
