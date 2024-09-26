@@ -5,7 +5,10 @@ BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 NOW    = $(shell date +%d%m%y)
 
 # cross
-TARGET = thumbv7m-none-eabi
+HW = qemu386
+include hw/$(HW).mk
+include cpu/$(CPU).mk
+include arch/$(ARCH).mk
 
 # dir
 CWD   = $(CURDIR)
@@ -62,8 +65,8 @@ install: doc ref gz
 	$(MAKE) update
 	opam init -y
 update:
-# sudo apt update
-# sudo apt install -uy `cat apt.txt`
+	sudo apt update
+	sudo apt install -uy `cat apt.txt arch/$(ARCH).apt`
 	$(OPAM) update
 ref:
 gz:

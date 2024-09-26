@@ -1,0 +1,1 @@
+TARGET = $(CPU)-elf
