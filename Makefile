@@ -62,12 +62,15 @@ bin/$(MODULE).$(HW).elf: $(C) $(H) $(TC) $(TH) $(MK)
 .PHONY: doc
 doc: \
 	$(HOME)/doc/Cpp/bare_metal_cpp.pdf \
+	$(HOME)/doc/Cpp/comms-protocols-cpp.pdf \
 	$(HOME)/doc/OCaml/ru_Minsky_Madhavapeddy_Hickey_-_Real_World_OCaml_-_2013.pdf
 
 $(HOME)/doc/OCaml/ru_Minsky_Madhavapeddy_Hickey_-_Real_World_OCaml_-_2013.pdf:
 
 $(HOME)/doc/Cpp/bare_metal_cpp.pdf:
 	$(CURL) $@ https://caxapa.ru/files/726395/bare_metal_cpp.pdf
+$(HOME)/doc/Cpp/comms-protocols-cpp.pdf:
+	$(CURL) $@ https://caxapa.ru/files/726398/comms-protocols-cpp.pdf
 
 .PHONY: doxy
 doxy: .doxygen
@@ -82,8 +85,12 @@ update:
 	sudo apt update
 	sudo apt install -uy `cat apt.txt arch/$(ARCH).apt`
 	$(OPAM) update
-ref:
+ref: \
+	ref/embxx/README.md
 gz:
+
+ref/embxx/README.md:
+	git clone -o gh -b master git@github.com:ponyatov/embxx.git ref/embxx
 
 # merge
 MERGE += Makefile README.md apt.txt LICENSE
