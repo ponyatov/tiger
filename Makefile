@@ -62,11 +62,14 @@ bin/$(MODULE).$(HW).elf: $(C) $(H) $(TC) $(TH) $(MK)
 .PHONY: doc
 doc: \
 	$(HOME)/doc/Cpp/bare_metal_cpp.pdf \
+	$(HOME)/doc/Cpp/bare_metal_cpp_v1.0.pdf \
 	$(HOME)/doc/Cpp/comms-protocols-cpp.pdf \
 	$(HOME)/doc/OCaml/ru_Minsky_Madhavapeddy_Hickey_-_Real_World_OCaml_-_2013.pdf
 
 $(HOME)/doc/OCaml/ru_Minsky_Madhavapeddy_Hickey_-_Real_World_OCaml_-_2013.pdf:
 
+$(HOME)/doc/Cpp/bare_metal_cpp_v1.0.pdf:
+	$(CURL) $@ https://github.com/arobenko/bare_metal_cpp_src/releases/download/v1.0/bare_metal_cpp_v1.0.pdf
 $(HOME)/doc/Cpp/bare_metal_cpp.pdf:
 	$(CURL) $@ https://caxapa.ru/files/726395/bare_metal_cpp.pdf
 $(HOME)/doc/Cpp/comms-protocols-cpp.pdf:
