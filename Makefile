@@ -23,23 +23,29 @@ GITREF = git clone --depth 1
 OPAM   = opam
 
 # src
+MK += Makefile hw/$(HW).mk cpu/$(CPU).mk arch/$(ARCH).mk
 C += $(wildcard src/*.c*)
 H += $(wildcard inc/*.h*)
 M += $(wildcard src/*.ml)
 
 # cfg
-CFLAGS += -Iinc -Itmp
+CFLAGS += -Iinc -Itmp -ggdb -O0
+TFLAGS += -ffreestanding -nostdlib
 
 # all
 .PHONY: all run
 all: bin/$(MODULE)
-run: bin/$(MODULE) lib/$(MODULE).ini
-	$^
+run: lib/$(MODULE).ini bin/$(MODULE) bin/$(MODULE).$(HW).elf
+	bin/$(MODULE) $<
+
+.PHONY: qemu
+qemu: bin/$(MODULE).$(HW).elf
+	$(QEMU) $(QEMU_CFG) -s -S -kernel $<
 
 # format
 .PHONY: format
 format: tmp/format_cpp tmp/format_ml
-tmp/format_cpp: $(C) $(H)
+tmp/format_cpp: $(C) $(H) $(TC) $(TH)
 	$(CF) $? && touch $@
 tmp/format_ml: $(M)
 	touch $@
@@ -47,13 +53,21 @@ tmp/format_ml: $(M)
 # rule
 bin/$(MODULE): $(C) $(H)
 	$(CXX) $(CFLAGS) -o $@ $(C) $(L)
+bin/$(MODULE).$(HW).elf: $(C) $(H) $(TC) $(TH) $(MK)
+	$(TCC) $(CFLAGS) $(TFLAGS) -o $@ $(C)
+	$(TSIZE) $@
+	$(TOD) -x $@ > tmp/$(MODULE).objdump
 
 # doc
 .PHONY: doc
 doc: \
+	$(HOME)/doc/Cpp/bare_metal_cpp.pdf \
 	$(HOME)/doc/OCaml/ru_Minsky_Madhavapeddy_Hickey_-_Real_World_OCaml_-_2013.pdf
 
 $(HOME)/doc/OCaml/ru_Minsky_Madhavapeddy_Hickey_-_Real_World_OCaml_-_2013.pdf:
+
+$(HOME)/doc/Cpp/bare_metal_cpp.pdf:
+	$(CURL) $@ https://caxapa.ru/files/726395/bare_metal_cpp.pdf
 
 .PHONY: doxy
 doxy: .doxygen

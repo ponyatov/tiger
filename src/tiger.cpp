@@ -3,7 +3,7 @@
 
 #include "tiger.hpp"
 
-int main(int argc, char *argv[]) {  //
+int main(int argc, const char *argv[]) {  //
     arg(0, argv[0]);
     for (int i = 1; i < argc; i++) {  //
         arg(i, argv[i]);
@@ -11,6 +11,6 @@ int main(int argc, char *argv[]) {  //
     return 0;
 }
 
-extern void arg(int argc, char argv[]) {  //
+extern void arg(int argc, const char argv[]) {  //
     fprintf(stderr, "argv[%i] = <%s>\n", argc, argv);
 }

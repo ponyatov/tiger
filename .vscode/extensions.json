@@ -8,13 +8,13 @@
         "foxundermoon.shell-format",
         // "ms-vscode-remote.remote-ssh",
         // "coolbear.systemd-unit-file",
-        // // "ms-azuretools.vscode-docker",
+        // "ms-azuretools.vscode-docker",
         // formatters
         "xaver.clang-format",
         "foxundermoon.shell-format",
-        // // misc
+        // misc
         // "usernamehw.errorlens",
-        // // "hbenl.vscode-test-explorer",
+        // "hbenl.vscode-test-explorer",
         // C++
         "ms-vscode.cpptools",
         "jeff-hykin.better-cpp-syntax",
@@ -30,6 +30,7 @@
         "zixuanwang.linkerscript",
         "trond-snekvik.gnu-mapfiles",
         // "dan-c-underwood.arm",
+        "basdp.language-gas-x86",
         // "luveti.kconfig",
     ]
 }

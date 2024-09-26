@@ -11,9 +11,9 @@
 /// @{
 
 /// @brief program entry point
-extern int main(int argc, char *argv[]);
+extern int main(int argc, const char *argv[]);
 
 /// @brief print command line argument
-extern void arg(int argc, char argv[]);
+extern void arg(int argc, const char argv[]);
 
 /// @}
