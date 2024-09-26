@@ -53,8 +53,8 @@ tmp/format_ml: $(M)
 # rule
 bin/$(MODULE): $(C) $(H)
 	$(CXX) $(CFLAGS) -o $@ $(C) $(L)
-bin/$(MODULE).$(HW).elf: $(C) $(H) $(TC) $(TH) $(MK)
-	$(TCC) $(CFLAGS) $(TFLAGS) -o $@ $(C)
+bin/$(MODULE).$(HW).elf: $(C) $(H) $(TC) $(TH) hw/$(HW).ld $(MK)
+	$(TCC) $(CFLAGS) $(TFLAGS) -Thw/$(HW).ld -DBareMetal -o $@ $(C) $(TC)
 	$(TSIZE) $@
 	$(TOD) -x $@ > tmp/$(MODULE).objdump
 
@@ -64,6 +64,7 @@ doc: \
 	$(HOME)/doc/Cpp/bare_metal_cpp.pdf \
 	$(HOME)/doc/Cpp/bare_metal_cpp_v1.0.pdf \
 	$(HOME)/doc/Cpp/comms-protocols-cpp.pdf \
+	$(HOME)/doc/OS/Operating_Systems_From_0_to_1.pdf \
 	$(HOME)/doc/OCaml/ru_Minsky_Madhavapeddy_Hickey_-_Real_World_OCaml_-_2013.pdf
 
 $(HOME)/doc/OCaml/ru_Minsky_Madhavapeddy_Hickey_-_Real_World_OCaml_-_2013.pdf:
@@ -74,6 +75,9 @@ $(HOME)/doc/Cpp/bare_metal_cpp.pdf:
 	$(CURL) $@ https://caxapa.ru/files/726395/bare_metal_cpp.pdf
 $(HOME)/doc/Cpp/comms-protocols-cpp.pdf:
 	$(CURL) $@ https://caxapa.ru/files/726398/comms-protocols-cpp.pdf
+
+$(HOME)/doc/OS/Operating_Systems_From_0_to_1.pdf:
+	$(CURL) $@ https://raw.githubusercontent.com/tuhdo/os01/master/Operating_Systems_From_0_to_1.pdf
 
 .PHONY: doxy
 doxy: .doxygen

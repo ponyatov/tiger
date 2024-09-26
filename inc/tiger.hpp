@@ -3,9 +3,11 @@
 
 #pragma once
 
+#ifndef BareMetal
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#endif  // BareMetal
 
 /// @defgroup main main
 /// @{
