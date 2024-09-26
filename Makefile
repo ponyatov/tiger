@@ -90,10 +90,14 @@ update:
 	$(OPAM) update
 ref: \
 	ref/embxx/README.md
-gz:
+gz: \
+	hw/rpi.ld
 
 ref/embxx/README.md:
 	git clone -o gh -b master git@github.com:ponyatov/embxx.git ref/embxx
+
+hw/rpi.ld:
+	$(CURL) $@ https://github.com/arobenko/embxx_on_rpi/raw/refs/heads/master/src/raspberrypi.ld
 
 # merge
 MERGE += Makefile README.md apt.txt LICENSE
