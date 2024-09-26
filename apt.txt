@@ -1,4 +1,4 @@
 git make curl
 code meld doxygen clang-format
-g++
+g++ flex bison libreadline-dev ragel
 ocaml opam utop dune
