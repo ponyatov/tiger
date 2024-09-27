@@ -1,3 +1,10 @@
 (lang dune 2.9)
-(name tiger)
 (generate_opam_files)
+(package
+ (name         tiger)
+ (description "Modern Compiler Implementation in ML (workout)")
+ (authors     "Dmitry Ponyatov <dponyatov@gmail.com>" )
+ (maintainers "Dmitry Ponyatov <dponyatov@gmail.com>" )
+ (homepage    "https://github.com/ponyatov/tiger")
+ (license      MIT)
+ (depends ocaml core dune utop ocamlformat))

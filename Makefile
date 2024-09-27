@@ -19,7 +19,7 @@ OPAM   = opam
 # src
 C += $(wildcard src/*.c*)
 H += $(wildcard inc/*.h*)
-M += $(wildcard bin/dune) $(wildcard lib/dune) $(wildcard test/dune)
+M += $(wildcard bin/dune) $(wildcard lib/dune) $(wildcard test/dune) $(wildcard dune*)
 M += $(wildcard bin/*.ml) $(wildcard lib/*.ml) $(wildcard test/*.ml)
 
 # cfg
