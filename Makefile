@@ -19,7 +19,7 @@ OPAM   = opam
 # src
 C += $(wildcard src/*.c*)
 H += $(wildcard inc/*.h*)
-M += $(wildcard src/*.ml)
+M += $(wildcard bin/*.ml) $(wildcard lib/*.ml) $(wildcard test/*.ml)
 
 # cfg
 CFLAGS += -Iinc -Itmp -ggdb -O0
@@ -36,7 +36,7 @@ format: tmp/format_cpp tmp/format_ml
 tmp/format_cpp: $(C) $(H)
 	$(CF) $? && touch $@
 tmp/format_ml: $(M)
-	touch $@
+	dune build @fmt --auto-promote && touch $@
 
 # rule
 bin/$(MODULE): $(C) $(H)
