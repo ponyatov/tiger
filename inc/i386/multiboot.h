@@ -9,6 +9,7 @@
 /// @{
 
 #include <stdint.h>
+#include <libc/start.hpp>
 
 #ifndef MULTIBOOT_H
 #define MULTIBOOT_H
@@ -71,7 +72,7 @@ extern "C" typedef struct multiboot_header {
     uint32_t load_addr;
     uint32_t load_end_addr;
     uint32_t bss_end_addr;
-    uint32_t entry_addr;
+    uint32_t entry_addr = (uint32_t)_start;
 } multiboot_header_t;
 
 extern "C" multiboot_header multiboot __attribute__((section(".multiboot")));

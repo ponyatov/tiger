@@ -4,8 +4,8 @@
 
 // const int argc = 3;
 
-// void _start(void) {
+void _start(void) {
 //     main(argc, argv);
-//     for (;;)
-//         ;
-// }
+    for (;;)
+        ;
+}
