@@ -7,4 +7,4 @@
  (maintainers "Dmitry Ponyatov <dponyatov@gmail.com>" )
  (homepage    "https://github.com/ponyatov/tiger")
  (license      MIT)
- (depends ocaml core dune utop ocamlformat))
+ (depends ocaml core dune utop ocamlformat batteries))

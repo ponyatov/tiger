@@ -1,1 +1,3 @@
-let () = print_endline "Hello, World!"
+open Batteries
+
+let () = print_endline (dump Sys.argv)

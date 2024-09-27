@@ -1,4 +1,4 @@
 git make curl
 code meld doxygen clang-format
 g++ flex bison libreadline-dev ragel
-ocaml opam utop dune ocp-indent
+ocaml opam utop dune ocp-indent ocaml-batteries-included

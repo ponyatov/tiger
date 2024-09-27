@@ -28,8 +28,8 @@ CFLAGS += -Iinc -Itmp -ggdb -O0
 # all
 .PHONY: all run cpp
 all: bin/$(MODULE)
-run: $(M)
-	dune build
+run: lib/$(MODULE).ini $(M)
+	dune build && dune exec $(MODULE) $<
 cpp: bin/$(MODULE) lib/$(MODULE).ini
 	$^
 
