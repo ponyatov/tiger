@@ -13,7 +13,7 @@
 /// @{
 
 /// @brief program entry point
-extern int main(int argc, const char *argv[]);
+extern "C" int main(int argc, const char *argv[]);
 
 /// @brief print command line argument
 extern void arg(int argc, const char argv[]);

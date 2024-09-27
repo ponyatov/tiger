@@ -28,9 +28,17 @@ C += $(wildcard src/*.c*)
 H += $(wildcard inc/*.h*)
 M += $(wildcard src/*.ml)
 
+TC += $(wildcard src/libc/*.c*)
+TH += $(wildcard inc/libc/*.h*)
+TC += $(wildcard src/$(HW)/*.c*)
+TH += $(wildcard inc/$(HW)/*.h*)
+TC += $(wildcard src/$(ARCH)/*.c*)
+TH += $(wildcard inc/$(ARCH)/*.h*)
+
 # cfg
 CFLAGS += -Iinc -Itmp -ggdb -O0
 TFLAGS += -ffreestanding -nostdlib
+TFLAGS += -march=$(ARCH) -Iinc/$(HW) -Iinc/$(ARCH)
 
 # all
 .PHONY: all run
@@ -40,6 +48,7 @@ run: lib/$(MODULE).ini bin/$(MODULE) bin/$(MODULE).$(HW).elf
 
 .PHONY: qemu
 qemu: bin/$(MODULE).$(HW).elf
+	grub-file --is-x86-multiboot $<
 	$(QEMU) $(QEMU_CFG) -s -S -kernel $<
 
 # format
@@ -95,13 +104,16 @@ update:
 ref: \
 	ref/embxx/README.md
 gz: \
-	hw/rpi.ld
+	hw/rpi.ld inc/i386/multiboot.h
 
 ref/embxx/README.md:
 	git clone -o gh -b master git@github.com:ponyatov/embxx.git ref/embxx
 
 hw/rpi.ld:
 	$(CURL) $@ https://github.com/arobenko/embxx_on_rpi/raw/refs/heads/master/src/raspberrypi.ld
+
+inc/i386/multiboot.h:
+	$(CURL) $@ https://github.com/cstack/osdev/raw/refs/heads/master/multiboot.h
 
 # merge
 MERGE += Makefile README.md apt.txt LICENSE

@@ -1,17 +1,52 @@
 ENTRY(_start);
+OUTPUT_FORMAT(elf32-i386);
+
+MEMORY
+{
+    X86 (rx)  : ORIGIN = 0 , LENGTH = 1M
+    RAM (rwx) : ORIGIN = 1M, LENGTH = 1M
+}
 
 PHDRS
 {
-    headers PT_PHDR FILEHDR PHDRS;
-    code PT_LOAD FILEHDR;
+    /* header PT_NULL FILEHDR;
+    text PT_NULL PHDRS;
+    data PT_NULL FILEHDR; */
 }
 
 SECTIONS /*top level command that declares a list of custom program sections, ld provides set of such instructions.*/
 {
-    . = 0x10000; /* set location counter to address 0x10000, base address for subsequent commands */
-    .text : { *(.text*) } :code /* final .text section begins at address 0x1000, combines all .text sections from obj files into one final*/
-    . = 0x8000000;
-    .rodata : { *(.rodata*) }
-    .data : { *(.data*) } /*wildcard means all obj file .data sections*/
-    .bss : { *(.bss*) }
+    /* . = 1M; */
+    .text : ALIGN(0x1000) {
+        /* link the multiboot struct here */
+        /* . = ALIGN(8); */
+        KEEP(*(.multiboot*))
+        *(.text*)
+    } >RAM
+    /* :code */
+    .rodata ALIGN (0x1000) : {
+        *(.rodata*)
+    } >RAM
+    .data ALIGN (0x1000) : {
+        *(.data*)
+    } >RAM
+    .bss ALIGN (0x1000) : {
+        *(COMMON*)
+        *(.bss*)
+    } >RAM
+    /DISCARD/ : {
+        *(.interp)
+        *(.dynsym)
+        *(.dynstr)
+        *(.hash)
+        *(.gnu.hash)
+        *(.header)
+        /*  */
+        *(.note*)
+        *(.comment*)
+        *(.debug*)
+        *(.dynamic*)
+        *(.rel*)
+        /* *(.got*) */
+    } : phdr
 }
