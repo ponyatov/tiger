@@ -26,9 +26,11 @@ M += $(wildcard bin/*.ml) $(wildcard lib/*.ml) $(wildcard test/*.ml)
 CFLAGS += -Iinc -Itmp -ggdb -O0
 
 # all
-.PHONY: all run
+.PHONY: all run cpp
 all: bin/$(MODULE)
-run: bin/$(MODULE) lib/$(MODULE).ini
+run: $(M)
+	dune build
+cpp: bin/$(MODULE) lib/$(MODULE).ini
 	$^
 
 # format
@@ -38,7 +40,6 @@ tmp/format_cpp: $(C) $(H)
 	$(CF) $? && touch $@
 tmp/format_ml: $(M)
 	dune fmt ; touch $@
-# dune build @fmt --auto-promote && touch $@
 
 # rule
 bin/$(MODULE): $(C) $(H)
