@@ -11,6 +11,7 @@
 //     struct multiboot_tag tags[0];
 // };
 
-multiboot_header multiboot __attribute__((section(".multiboot"))) = {
-    .magic = MULTIBOOT_HEADER_MAGIC  //
-};
+extern "C" multiboot_header multiboot __attribute__((section(".multiboot")));
+//  = {
+// //     .magic = MULTIBOOT_HEADER_MAGIC  //
+// };

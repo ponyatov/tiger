@@ -21,6 +21,7 @@ SECTIONS /*top level command that declares a list of custom program sections, ld
         /* link the multiboot struct here */
         /* . = ALIGN(8); */
         KEEP(*(.multiboot*))
+        KEEP(*(.start*))
         *(.text*)
     } >RAM
     /* :code */

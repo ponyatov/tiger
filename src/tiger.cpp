@@ -11,7 +11,7 @@ int main(int argc, const char *argv[]) {  //
     return 0;
 }
 
-extern void arg(int argc, const char argv[]) {  //
+void arg(int argc, const char argv[]) {  //
 #ifndef BareMetal
     fprintf(stderr, "argv[%i] = <%s>\n", argc, argv);
 #endif  // BareMetal

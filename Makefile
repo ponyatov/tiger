@@ -30,15 +30,17 @@ M += $(wildcard src/*.ml)
 
 TC += $(wildcard src/libc/*.c*)
 TH += $(wildcard inc/libc/*.h*)
-TC += $(wildcard src/$(HW)/*.c*)
-TH += $(wildcard inc/$(HW)/*.h*)
 TC += $(wildcard src/$(ARCH)/*.c*)
 TH += $(wildcard inc/$(ARCH)/*.h*)
+TC += $(wildcard src/$(ARCH)/$(HW)/*.c*)
+TH += $(wildcard inc/$(ARCH)/$(HW)/*.h*)
+TC += $(wildcard src/libc/*.c*)
+TH += $(wildcard inc/libc/*.h*)
 
 # cfg
 CFLAGS += -Iinc -Itmp -ggdb -O0
-TFLAGS += -ffreestanding -nostdlib
-TFLAGS += -march=$(ARCH) -Iinc/$(HW) -Iinc/$(ARCH)
+TFLAGS += -ffreestanding -nostdlib -DBareMetal
+TFLAGS += -march=$(ARCH) -Iinc/$(ARCH) -Iinc/$(ARCH)/$(HW)
 
 # all
 .PHONY: all run
@@ -63,7 +65,7 @@ tmp/format_ml: $(M)
 bin/$(MODULE): $(C) $(H)
 	$(CXX) $(CFLAGS) -o $@ $(C) $(L)
 bin/$(MODULE).$(HW).elf: $(C) $(H) $(TC) $(TH) hw/$(HW).ld $(MK)
-	$(TCC) $(CFLAGS) $(TFLAGS) -Thw/$(HW).ld -DBareMetal -o $@ $(C) $(TC)
+	$(TCC) $(CFLAGS) $(TFLAGS) -Thw/$(HW).ld -o $@ $(C) $(TC)
 	$(TSIZE) $@
 	$(TOD) -x $@ > tmp/$(MODULE).objdump
 
