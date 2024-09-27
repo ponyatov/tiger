@@ -4,12 +4,6 @@ REL    = $(shell git rev-parse --short=4    HEAD)
 BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 NOW    = $(shell date +%d%m%y)
 
-# cross
-HW = qemu386
-include hw/$(HW).mk
-include cpu/$(CPU).mk
-include arch/$(ARCH).mk
-
 # dir
 CWD   = $(CURDIR)
 TMP   = $(CWD)/tmp
@@ -23,40 +17,23 @@ GITREF = git clone --depth 1
 OPAM   = opam
 
 # src
-MK += Makefile hw/$(HW).mk cpu/$(CPU).mk arch/$(ARCH).mk
 C += $(wildcard src/*.c*)
 H += $(wildcard inc/*.h*)
 M += $(wildcard src/*.ml)
 
-TC += $(wildcard src/libc/*.c*)
-TH += $(wildcard inc/libc/*.h*)
-TC += $(wildcard src/$(ARCH)/*.c*)
-TH += $(wildcard inc/$(ARCH)/*.h*)
-TC += $(wildcard src/$(ARCH)/$(HW)/*.c*)
-TH += $(wildcard inc/$(ARCH)/$(HW)/*.h*)
-TC += $(wildcard src/libc/*.c*)
-TH += $(wildcard inc/libc/*.h*)
-
 # cfg
 CFLAGS += -Iinc -Itmp -ggdb -O0
-TFLAGS += -ffreestanding -nostdlib -DBareMetal
-TFLAGS += -march=$(ARCH) -Iinc/$(ARCH) -Iinc/$(ARCH)/$(HW)
 
 # all
 .PHONY: all run
 all: bin/$(MODULE)
-run: lib/$(MODULE).ini bin/$(MODULE) bin/$(MODULE).$(HW).elf
-	bin/$(MODULE) $<
-
-.PHONY: qemu
-qemu: bin/$(MODULE).$(HW).elf
-	grub-file --is-x86-multiboot $<
-	$(QEMU) $(QEMU_CFG) -s -S -kernel $<
+run: bin/$(MODULE) lib/$(MODULE).ini
+	$^
 
 # format
 .PHONY: format
 format: tmp/format_cpp tmp/format_ml
-tmp/format_cpp: $(C) $(H) $(TC) $(TH)
+tmp/format_cpp: $(C) $(H)
 	$(CF) $? && touch $@
 tmp/format_ml: $(M)
 	touch $@
@@ -64,31 +41,13 @@ tmp/format_ml: $(M)
 # rule
 bin/$(MODULE): $(C) $(H)
 	$(CXX) $(CFLAGS) -o $@ $(C) $(L)
-bin/$(MODULE).$(HW).elf: $(C) $(H) $(TC) $(TH) hw/$(HW).ld $(MK)
-	$(TCC) $(CFLAGS) $(TFLAGS) -Thw/$(HW).ld -o $@ $(C) $(TC)
-	$(TSIZE) $@
-	$(TOD) -x $@ > tmp/$(MODULE).objdump
 
 # doc
 .PHONY: doc
 doc: \
-	$(HOME)/doc/Cpp/bare_metal_cpp.pdf \
-	$(HOME)/doc/Cpp/bare_metal_cpp_v1.0.pdf \
-	$(HOME)/doc/Cpp/comms-protocols-cpp.pdf \
-	$(HOME)/doc/OS/Operating_Systems_From_0_to_1.pdf \
 	$(HOME)/doc/OCaml/ru_Minsky_Madhavapeddy_Hickey_-_Real_World_OCaml_-_2013.pdf
 
 $(HOME)/doc/OCaml/ru_Minsky_Madhavapeddy_Hickey_-_Real_World_OCaml_-_2013.pdf:
-
-$(HOME)/doc/Cpp/bare_metal_cpp_v1.0.pdf:
-	$(CURL) $@ https://github.com/arobenko/bare_metal_cpp_src/releases/download/v1.0/bare_metal_cpp_v1.0.pdf
-$(HOME)/doc/Cpp/bare_metal_cpp.pdf:
-	$(CURL) $@ https://caxapa.ru/files/726395/bare_metal_cpp.pdf
-$(HOME)/doc/Cpp/comms-protocols-cpp.pdf:
-	$(CURL) $@ https://caxapa.ru/files/726398/comms-protocols-cpp.pdf
-
-$(HOME)/doc/OS/Operating_Systems_From_0_to_1.pdf:
-	$(CURL) $@ https://raw.githubusercontent.com/tuhdo/os01/master/Operating_Systems_From_0_to_1.pdf
 
 .PHONY: doxy
 doxy: .doxygen
@@ -103,25 +62,13 @@ update:
 	sudo apt update
 	sudo apt install -uy `cat apt.txt arch/$(ARCH).apt`
 	$(OPAM) update
-ref: \
-	ref/embxx/README.md
-gz: \
-	hw/rpi.ld inc/i386/multiboot.h
-
-ref/embxx/README.md:
-	git clone -o gh -b master git@github.com:ponyatov/embxx.git ref/embxx
-
-hw/rpi.ld:
-	$(CURL) $@ https://github.com/arobenko/embxx_on_rpi/raw/refs/heads/master/src/raspberrypi.ld
-
-inc/i386/multiboot.h:
-	$(CURL) $@ https://github.com/cstack/osdev/raw/refs/heads/master/multiboot.h
+ref:
+gz:
 
 # merge
 MERGE += Makefile README.md apt.txt LICENSE
 MERGE += .clang-format .doxygen .gitignore
 MERGE += .vscode bin doc lib inc src tmp ref
-MERGE += hw cpu arch
 
 .PHONY: dev
 dev:
