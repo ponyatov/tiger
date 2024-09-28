@@ -13,6 +13,8 @@ depends: [
   "utop"
   "ocamlformat"
   "batteries"
+  "ocaml-lsp-server"
+  "menhir"
   "odoc" {with-doc}
 ]
 build: [

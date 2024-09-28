@@ -8,4 +8,6 @@
 (package
  (name         tiger)
  (synopsis    "Modern Compiler Implementation in ML (workout)")
- (depends      ocaml core dune utop ocamlformat batteries))
+ (depends
+  ocaml core dune utop ocamlformat
+  batteries ocaml-lsp-server menhir))
