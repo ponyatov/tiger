@@ -5,6 +5,7 @@ maintainer: ["Dmitry Ponyatov <dponyatov@gmail.com>"]
 authors: ["Dmitry Ponyatov <dponyatov@gmail.com>"]
 license: "MIT"
 homepage: "https://github.com/ponyatov/tiger"
+bug-reports: "http://t.me/dponyatov"
 depends: [
   "ocaml"
   "core"
