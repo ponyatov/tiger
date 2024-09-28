@@ -62,7 +62,7 @@ install: doc ref gz
 	$(MAKE) update
 	opam init -y
 	opam switch default
-	opam install -y ocamlformat
+	opam install -y --deps-only .
 update:
 	sudo apt update
 	sudo apt install -uy `cat apt.txt arch/$(ARCH).apt`
