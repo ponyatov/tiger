@@ -48,9 +48,13 @@ bin/$(MODULE): $(C) $(H)
 # doc
 .PHONY: doc
 doc: \
+	$(HOME)/doc/OCaml/cs3110_ocaml_programming.pdf \
 	$(HOME)/doc/OCaml/ru_Minsky_Madhavapeddy_Hickey_-_Real_World_OCaml_-_2013.pdf
 
 $(HOME)/doc/OCaml/ru_Minsky_Madhavapeddy_Hickey_-_Real_World_OCaml_-_2013.pdf:
+
+$(HOME)/doc/OCaml/cs3110_ocaml_programming.pdf:
+	$(CURL) $@ https://cs3110.github.io/textbook/ocaml_programming.pdf
 
 .PHONY: doxy
 doxy: .doxygen
