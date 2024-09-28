@@ -7,5 +7,5 @@
 (license      MIT)
 (package
  (name         tiger)
- (description "Modern Compiler Implementation in ML (workout)")
+ (synopsis    "Modern Compiler Implementation in ML (workout)")
  (depends      ocaml core dune utop ocamlformat batteries))
