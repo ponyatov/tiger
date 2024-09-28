@@ -21,6 +21,7 @@
     // files
     "files.exclude": {
         "docs/**": true,
+        "_build/**": true,
     },
     "files.watcherExclude": {
         "ref/**": true,
@@ -52,4 +53,14 @@
         "editor.formatOnSave":     true
     },
     "C_Cpp.intelliSenseEngine":    "Tag Parser",
+
+    // OCaml
+    "[ocaml]": {
+        "editor.tabSize": 2,
+        "editor.formatOnSave": true
+    },
+    "[ocaml.interface]": {
+        "editor.tabSize": 2,
+        "editor.formatOnSave": true
+    },
 }
