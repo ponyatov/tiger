@@ -63,5 +63,7 @@
         "editor.tabSize": 2,
         "editor.formatOnSave": true
     },
-    "ocaml.server.args": [],
+    "ocaml.server.args": [
+        
+    ],
 }

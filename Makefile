@@ -35,7 +35,8 @@ cpp: bin/$(MODULE) lib/$(MODULE).ini
 
 .PHONY: watch
 watch: $(M)
-	dune exec --$@ $(MODULE) lib/$(MODULE).ini
+	dune exec --watch --terminal-persistence=clear-on-rebuild \
+		$(MODULE) lib/$(MODULE).ini
 
 # format
 .PHONY: format
