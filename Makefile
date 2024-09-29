@@ -19,8 +19,8 @@ OPAM   = opam
 # src
 C += $(wildcard src/*.c*)
 H += $(wildcard inc/*.h*)
-M += $(wildcard bin/dune) $(wildcard lib/dune) $(wildcard test/dune) $(wildcard dune*)
-M += $(wildcard bin/*.ml) $(wildcard lib/*.ml) $(wildcard test/*.ml)
+M += $(wildcard src/bin/dune) $(wildcard src/lib/dune) $(wildcard test/dune) $(wildcard dune*)
+M += $(wildcard src/bin/*.ml) $(wildcard src/lib/*.ml) $(wildcard test/*.ml)
 
 # cfg
 CFLAGS += -Iinc -Itmp -ggdb -O0
@@ -32,6 +32,10 @@ run: lib/$(MODULE).ini $(M)
 	dune build && dune exec $(MODULE) $<
 cpp: bin/$(MODULE) lib/$(MODULE).ini
 	$^
+
+.PHONY: watch
+watch: $(M)
+	dune exec --$@ $(MODULE) lib/$(MODULE).ini
 
 # format
 .PHONY: format
@@ -49,12 +53,16 @@ bin/$(MODULE): $(C) $(H)
 .PHONY: doc
 doc: \
 	$(HOME)/doc/OCaml/cs3110_ocaml_programming.pdf \
+	$(HOME)/doc/OCaml/menhir.pdf \
 	$(HOME)/doc/OCaml/ru_Minsky_Madhavapeddy_Hickey_-_Real_World_OCaml_-_2013.pdf
 
 $(HOME)/doc/OCaml/ru_Minsky_Madhavapeddy_Hickey_-_Real_World_OCaml_-_2013.pdf:
 
 $(HOME)/doc/OCaml/cs3110_ocaml_programming.pdf:
 	$(CURL) $@ https://cs3110.github.io/textbook/ocaml_programming.pdf
+
+$(HOME)/doc/OCaml/menhir.pdf:
+	$(CURL) $@ https://gallium.inria.fr/~fpottier/menhir/manual.pdf
 
 .PHONY: doxy
 doxy: .doxygen
