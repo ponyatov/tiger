@@ -1,0 +1,13 @@
+(lang dune 2.9)
+(generate_opam_files)
+(bug_reports "http://t.me/dponyatov")
+(authors     "Dmitry Ponyatov <dponyatov@gmail.com>" )
+(maintainers "Dmitry Ponyatov <dponyatov@gmail.com>" )
+(homepage    "https://github.com/ponyatov/tiger")
+(license      MIT)
+(package
+ (name         tiger)
+ (synopsis    "Modern Compiler Implementation in ML (workout)")
+ (depends
+  ocaml core dune utop ocamlformat
+  batteries ocaml-lsp-server menhir))
