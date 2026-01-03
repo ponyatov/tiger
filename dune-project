@@ -20,5 +20,5 @@ embedded Tiger -> C/C++ translator
  (tags
   ("embedded" "compiler" translator))
  (allow_empty)
- (depends ocaml utop dune)
+ (depends ocaml utop dune ocamlformat ocaml-lsp-server ppx_string menhir)
 )

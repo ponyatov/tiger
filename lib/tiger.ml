@@ -1,1 +1,17 @@
 (** Modern Compiler Implementation in OCaml *)
+
+let multiline = {|
+Это многострочная строка.
+Она может содержать "кавычки" без экранирования.
+Переменные не интерполируются: имя = %s
+|}
+
+let code_example = 
+print_endline {_|
+    let x = 5
+    let y = 10
+    let sum = x + y
+    print_int sum
+|_}
+
+(* Все строки будут выровнены по минимальному отступу *)
