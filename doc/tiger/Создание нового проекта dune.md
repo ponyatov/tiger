@@ -44,3 +44,5 @@ _build/       артефакты сборки
 		```
 	- `hci.ml`библиотека
 	- [[tiger/dune|dune]]
+
+![[tiger/dune-project|dune-project]]

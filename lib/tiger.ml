@@ -15,3 +15,7 @@ print_endline {_|
 |_}
 
 (* Все строки будут выровнены по минимальному отступу *)
+
+let hello = "Hello" in
+let world = "World" in
+print_endline [%string "%{hello} %{world}"]

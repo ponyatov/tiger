@@ -19,4 +19,5 @@ R  += $(wildcard src/*.rs) Cargo.toml
 S  += $(wildcard lib/*.ini) $(wildcard lib/*.f)
 
 # OCaml
-M += $(wildcard lib/*.ml*) $(wildcard legas/*.ml*)
+M += $(wildcard lib/*.ml*)
+# $(wildcard legas/*.ml*)

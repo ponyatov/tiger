@@ -1,8 +1,9 @@
 (library
-  (name tiger)
-  (modules tiger)
-  (libraries))
-; (libraries ppx_string))
+ (name tiger)
+ (modules tiger)
+ (libraries ppx_string)
+ (preprocess
+  (pps ppx_string)))
 
 (test
  (modules test)
