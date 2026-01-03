@@ -1,0 +1,28 @@
+# file(GLOB LD -> cmake/any_toolchain.cmake
+
+file(GLOB S
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.s
+)
+
+file(GLOB C
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.c*
+)
+
+file(GLOB H
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    inc/*.h*
+)
+
+file(GLOB INC
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}
+    inc src
+)
+include_directories(${INC})
+
+file(GLOB INI
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    lib/*.ini lib/*.f
+)
