@@ -1,0 +1,4 @@
+.PHONY: ai tmp/$(APP).ai.md
+ai: tmp/$(APP).ai.md
+tmp/$(APP).ai.md: doc
+	cat doc/ai.md doc/$(APP)/bib.md README.md doc/$(APP)/*.md > $@ ; touch $@
